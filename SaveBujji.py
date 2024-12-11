@@ -1,3 +1,19 @@
+import os
+import sys
+
+def resource_path(relative_path):
+    """ Get the absolute path to the resource, works for development and for PyInstaller. """
+    if getattr(sys, 'frozen', False):  # If the app is bundled by PyInstaller
+        base_path = sys._MEIPASS
+    else:
+        base_path = os.path.dirname(os.path.abspath(__file__))
+    return os.path.join(base_path, relative_path)
+
+# Example usage:
+# Loading an image or other asset
+image_path = resource_path("assets/image.png")
+sound_path = resource_path("assets/sound.mp3")
+
 import pygame
 import random
 pygame.init()
@@ -6,10 +22,10 @@ win = pygame.display.set_mode((728,455))
 
 pygame.display.set_caption("Save Bujji")
 
-bg = pygame.image.load('assets/bg.jpg')
+bg = pygame.image.load(image_path)
 
 # Load and play music
-pygame.mixer.music.load("assets/Bujji Theme.mp3")  # Path to your music file
+pygame.mixer.music.load(sound_path)  # Path to your music file
 pygame.mixer.music.set_volume(0.5)          # Volume (0.0 to 1.0)
 pygame.mixer.music.play(-1) 
 
